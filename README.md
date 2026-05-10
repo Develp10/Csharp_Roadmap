@@ -371,3 +371,188 @@ Honest talk о том, как растёт зарплата и что выбир
 * Прыжки между языками каждые полгода. Рынок платит за глубину, а не за длинный список технологий в резюме.
 * Работа в одной компании 10 лет на одной роли. Стек устареет, и выйти будет тяжело.
 Фреймворки сменятся через пять лет, понимание памяти, конкурентности и проектирования останется.
+
+---
+
+## Этап 10. Глубокая производительность и системное программирование
+
+Уровень, на котором вы пишете код, конкурирующий по скорости с C++ и Rust. Нужно, если работаете в трейдинге, игровых движках, базах данных, ML-инфраструктуре, реальном времени.
+
+* SIMD и векторизация через System.Numerics.Vector, Vector256, Vector512. Intrinsics из System.Runtime.Intrinsics для AVX, SSE, NEON.
+* unsafe код, fixed buffers, работа с указателями. Понимание, когда это оправдано, а когда стрелять себе в ногу.
+* Hardware intrinsics, prefetching, выравнивание данных по cache line, false sharing и его измерение.
+* Memory layout: StructLayout, LayoutKind.Sequential vs Explicit, padding, упаковка структур.
+* Lock-free структуры данных: Interlocked, volatile, memory barriers, модель памяти .NET (release/acquire semantics).
+* Кастомные аллокаторы, ArrayPool, MemoryPool, RecyclableMemoryStream.
+* Native AOT: ограничения, размер бинарника, startup time, тестирование совместимости рефлексии.
+* Профилирование на уровне CPU: Intel VTune, AMD uProf, чтение perf counters, IPC, branch misprediction, cache misses.
+* Заводить дружбу с дизассемблером. SharpLab, Disasmo для просмотра JIT-кода.
+
+Ресурсы:
+
+* «Pro .NET Performance» Sasha Goldshtein.
+* «Mechanical Sympathy» Martin Thompson, доклады с QCon.
+* Блог EgorBo (egorbogatov.com) про оптимизации в RyuJIT.
+* Доклады Federico Andres Lois на DotNext про low-latency.
+
+Практика: написать структуру данных, которая обгоняет System.Collections аналог на 30% по выбранной метрике, доказать измерениями.
+
+---
+
+## Этап 11. Распределённые системы продвинутого уровня
+
+Когда модульный монолит уже не справляется и нужно строить настоящие распределённые системы. Сложность растёт нелинейно с числом узлов.
+
+* Теория: модель FLP impossibility, CAP подробно, PACELC, теорема Брюера. Согласованность: linearizable, sequential, causal, eventual.
+* Алгоритмы консенсуса: Paxos, Raft, Multi-Paxos. Реализации (etcd, ZooKeeper, Consul) и их применение.
+* Распределённые транзакции: 2PC, 3PC, Saga (orchestration vs choreography), TCC, Outbox pattern на практике.
+* Event Sourcing и CQRS в проде: snapshotting, projections, eventual consistency читающей стороны, проблема re-build.
+* Kafka в глубину: партиционирование, exactly-once семантика, transactional outbox, Kafka Streams.
+* Stream processing: Apache Flink, ksqlDB, обработка late events, watermarks, окна.
+* Distributed tracing на серьёзном уровне: W3C Trace Context, baggage, sampling strategies, корреляция через границы сервисов.
+* Service mesh: Istio, Linkerd. Когда нужен и когда это overengineering.
+* Multi-region архитектуры: репликация данных, conflict-free replicated data types (CRDT), геораспределённые БД (CockroachDB, YugabyteDB, Spanner).
+* Chaos engineering: Chaos Monkey, Litmus, искусственные сбои в стейджинге и проде.
+
+Ресурсы:
+
+* «Designing Data-Intensive Applications» (перечитать с другим уровнем понимания).
+* «Database Internals» Alex Petrov.
+* Курс MIT 6.824 Distributed Systems на YouTube.
+* Статьи Martin Kleppmann в его блоге, особенно про CRDT.
+* Jepsen-отчёты о реальных багах в распределённых БД.
+
+---
+
+## Этап 12. Платформенная инженерия
+
+Если вы строите внутренние платформы для других команд, занимаетесь developer experience, инфраструктурой для микросервисов.
+
+* Service templates: golden paths, скаффолдинг новых сервисов через Backstage, cookiecutter, dotnet new templates.
+* Internal Developer Platform: Backstage, Port, Humanitec. Каталог сервисов, ownership, scorecards.
+* Service mesh, API Gateway (Kong, Envoy, YARP), policy as code (OPA).
+* GitOps: ArgoCD, Flux. Декларативное описание состояния кластера.
+* Kubernetes operators на C# через KubeOps. Кастомные CRD под нужды компании.
+* Multi-tenancy: изоляция данных, ресурсов, secrets, биллинга на уровне платформы.
+* SRE-практики: SLI, SLO, error budgets, toil reduction, постмортемы без поиска виноватых.
+* FinOps: атрибуция облачных расходов на команды, контроль cost drift, reserved instances, spot.
+
+Ресурсы:
+
+* «Team Topologies» Skelton, Pais.
+* «Site Reliability Engineering» книги Google (бесплатно онлайн).
+* «Platform Engineering on Kubernetes» Mauricio Salatino.
+* Блог Charity Majors про observability.
+
+---
+
+## Этап 13. Доменно-управляемое проектирование на практике
+
+DDD на уровне выше книжного. Когда вы реально проектируете сложные домены, а не просто называете папки Aggregate.
+
+* Strategic DDD: context mapping, anti-corruption layer, partnership, customer/supplier, shared kernel, conformist.
+* Event Storming как метод изучения домена. Big Picture, Process Modeling, Software Design сессии.
+* Bounded contexts и команды по Conway's law. Размер контекста под размер команды.
+* Tactical DDD: агрегаты с инвариантами, value objects вместо примитивов, доменные события как контракт между контекстами.
+* Specification pattern, doman services, factories. Когда они уместны, когда вырождаются в anemic model.
+* CQRS как естественное следствие DDD, а не отдельный паттерн навешанный сверху.
+* Modular monolith как переходная стадия и постоянная архитектура для большинства продуктов.
+* Микросервисы по границам bounded contexts, а не по техническим слоям.
+
+Ресурсы:
+
+* «Learning Domain-Driven Design» Vlad Khononov, современная замена книге Эванса.
+* «Implementing Domain-Driven Design» Vaughn Vernon.
+* «Domain Modeling Made Functional» Scott Wlaschin (на F#, но идеи переносятся на C#).
+* Канал Eric Evans на YouTube, доклады с DDD Europe.
+
+---
+
+## Этап 14. Расширение стека за пределы C#
+
+Senior+ инженер не сидит в одном языке. Расширение стека делает вас сильнее в основном языке и открывает двери.
+
+* F# для функционального программирования, моделирования доменов, скриптов, data science. Учит мыслить через типы и неизменяемость.
+* Rust для системного программирования, FFI с .NET через C ABI, написания горячих участков как native библиотек.
+* Go для CLI-инструментов, инфраструктурных утилит, операторов Kubernetes.
+* TypeScript на уровне комфортной работы. Фронтенд закрыт, full-stack тикеты не пугают.
+* Python для скриптов, ML, интеграций. Минимум pandas, numpy, requests.
+* SQL расширенный: window functions, CTE, recursive queries, query optimization на уровне понимания execution plans.
+* Lua, Wasm, Elixir для отдельных задач (скриптинг, edge computing, fault-tolerant системы).
+
+Не нужно знать всё. Нужен второй язык на хорошем уровне и три-четыре на читающем.
+
+Ресурсы:
+
+* «Programming Rust» Blandy, Orendorff.
+* «Domain Modeling Made Functional» (F#).
+* «The Go Programming Language» Donovan, Kernighan.
+* exercism.io для практики синтаксиса в новых языках.
+
+---
+
+## Этап 15. ML и AI-инженерия в .NET-стеке
+
+Если хотите быть тем разработчиком, который встраивает ИИ в продукт, а не просто пользуется ChatGPT.
+
+* ML.NET для классических задач: классификация, регрессия, кластеризация, рекомендации, anomaly detection. AutoML.
+* ONNX Runtime для запуска моделей, обученных в PyTorch или TensorFlow, прямо из C#. Inference на CPU и GPU.
+* Semantic Kernel и Microsoft.Extensions.AI для построения LLM-приложений на .NET: оркестрация промптов, function calling, агенты.
+* RAG-архитектуры: эмбеддинги, векторные БД (Qdrant, Weaviate, pgvector, Azure AI Search), chunking, re-ranking.
+* Локальные модели через Ollama, llama.cpp, интеграция через REST или gRPC.
+* Fine-tuning, prompt engineering, evaluation: BLEU, ROUGE, LLM-as-judge, regression-тесты для промптов.
+* MLOps базово: версионирование моделей и данных (DVC, MLflow), мониторинг drift, A/B-тестирование моделей в проде.
+* Safety и guardrails: prompt injection защита, output filtering, PII detection, токен-лимиты, кост-контроль.
+
+Ресурсы:
+
+* Документация ML.NET и Semantic Kernel.
+* «Building LLMs for Production» книги от LlamaIndex.
+* Курс «AI Engineering» Chip Huyen.
+* Блог Simon Willison про практическое применение LLM.
+
+Практика: построить RAG-систему по корпоративной документации на .NET с локальной моделью через Ollama и pgvector. Замерить latency, точность, стоимость.
+
+---
+
+## Этап 16. Open source и техническое лидерство
+
+Уровень, на котором ваше имя начинают узнавать за пределами компании.
+
+* Контрибьют в крупные .NET-репозитории: dotnet/runtime, dotnet/aspnetcore, dotnet/efcore. Начинать с good-first-issue, переходить к фичам.
+* Поддержка собственной open source библиотеки. Это другая работа: документация, релизы, обработка issues и PR, общение с пользователями.
+* NuGet-пакеты с правильной семантикой версий, source link, deterministic builds, подписанные сборки.
+* Выступления на конференциях: DotNext, NDC, .NET Conf, локальные митапы. Путь от 15-минутного lightning talk до часового keynote.
+* Технические статьи и блог. Регулярность важнее идеального текста. Кросс-постинг на Habr, Medium, dev.to.
+* Менторство и преподавание. Курсы, школы, корпоративные тренинги.
+* Tech radar внутри компании: формализованный процесс выбора и отказа от технологий.
+* Архитектурный комитет и принятие решений уровня компании, а не команды.
+
+Ресурсы:
+
+* «The Manager's Path» Camille Fournier, даже если не идёте в менеджмент.
+* «An Elegant Puzzle» Will Larson.
+* Подкасты .NET Rocks, RunAs Radio.
+* Изучение работы крупных open source мейнтейнеров (David Fowler, Stephen Toub, Andrew Lock).
+
+---
+
+## Этап 17. Бизнес-контекст и продуктовое мышление
+
+Senior+ инженер понимает, зачем компания платит ему зарплату, и принимает решения, исходя из этого.
+
+* Unit-экономика продукта: CAC, LTV, churn, ARR, gross margin. Уметь прочитать дашборд бизнеса и понять, что важно сейчас.
+* Связка технических решений с метриками: как изменение архитектуры влияет на скорость доставки фич, на cost per request, на retention.
+* Discovery vs delivery. Когда писать прототип за день, а когда вкладываться в production-grade решение.
+* Working backwards от пользователя. Amazon-овский PR/FAQ как формат проектирования продукта до написания кода.
+* Понимание базовой финансовой отчётности компании, особенно в публичных компаниях. P&L, cash flow, balance sheet на минимальном уровне.
+* Юридические основы: лицензии open source (MIT, Apache, GPL и их совместимость), GDPR, обработка персональных данных, экспортный контроль.
+* Переговоры: с командой, с менеджментом, с заказчиками. «Never Split the Difference» Криса Восса как минимальная база.
+
+Ресурсы:
+
+* «Inspired» Marty Cagan про продуктовое мышление.
+* «The Lean Startup» Eric Ries.
+* «Accelerate» Forsgren, Humble, Kim про DORA-метрики и связь инженерных практик с бизнес-результатами.
+* «Working Backwards» Bryar, Carr про процессы Amazon.
+
