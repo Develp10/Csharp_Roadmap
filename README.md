@@ -40,6 +40,19 @@
 - [Этап 18. DevSecOps и Supply Chain Security](#этап-18-devsecops-и-supply-chain-security)
 - [Этап 19. Documentation as Code](#этап-19-documentation-as-code-и-инженерное-письмо)
 - [Этап 20. Устойчивая карьера и этика](#этап-20-устойчивая-карьера-этика-и-долгая-игра)
+- [Этап 21. Наблюдаемость](#этап-21-наблюдаемость-на-уровне-senior)
+- [Этап 22. Контрактное тестирование и эволюция API](#этап-22-контрактное-тестирование-и-эволюция-api)
+- [Этап 23. Feature flags и progressive delivery](#этап-23-feature-flags-и-progressive-delivery)
+- [Этап 24. Работа с legacy и крупные миграции](#этап-24-работа-с-legacy-и-крупные-миграции)
+- [Этап 25. Управление техническим долгом](#этап-25-управление-техническим-долгом-как-процесс)
+- [Визуальная карта роста](#визуальная-карта-роста)
+- [План на первые 90 дней](#план-на-первые-90-дней-для-тех-кто-только-начинает)
+- [Структура pet-проекта](#минимальная-структура-pet-проекта-которая-открывает-двери)
+- [Эталонные сниппеты идиоматического C#](#эталонные-сниппеты-что-отличает-идиоматический-c-от-кода-на-c-со-стилем-java)
+- [Идеи pet-проектов по уровням](#идеи-pet-проектов-по-уровню-сложности)
+- [Глоссарий ключевых терминов](#глоссарий-ключевых-терминов)
+- [Расширенные ресурсы](#расширенные-ресурсы-по-этапам)
+- [Шаблон еженедельной ретроспективы](#шаблон-еженедельной-ретроспективы-обучения)
 - [Лучшие практики](#лучшие-практики-которые-экономят-годы)
 - [Как работать с ИИ-инструментами](#как-работать-с-ии-инструментами-и-не-деградировать)
 - [Чек-лист готовности к уровням](#чек-лист-готовности-к-уровням)
@@ -720,6 +733,423 @@ Rider, если вы платите сами и работаете на Mac/Linu
 
 **Как понять, что я готов сменить уровень?**
 Когда задачи прошлого уровня перестают казаться вызовом и вы устойчиво решаете задачи следующего уровня без помощи. Чек-листы выше — ориентир, не догма.
+
+## Визуальная карта роста
+
+```mermaid
+flowchart TD
+    Start([Старт: я хочу в .NET])-->E1
+    E1[Этап 1<br/>Фундамент языка]-->E2[Этап 2<br/>Платформа .NET]
+    E1-->E3[Этап 3<br/>Инструменты]
+    E2-->E4[Этап 4<br/>Базы данных]
+    E2-->E5[Этап 5<br/>ASP.NET Core]
+    E3-->E5
+    E4-->E5
+    E5-->E6[Этап 6<br/>Архитектура]
+    E5-->E7[Этап 7<br/>Тестирование]
+    E6-->E8[Этап 8<br/>Облака]
+    E7-->E8
+    E8-->Mid{Уровень<br/>Middle}
+    Mid-->E9[Этап 9<br/>Специализация]
+    Mid-->E10[Этап 10<br/>Производительность]
+    Mid-->E11[Этап 11<br/>Распределённые]
+    Mid-->E13[Этап 13<br/>DDD]
+    Mid-->E15[Этап 15<br/>ML/AI]
+    E10-->Sr{Уровень<br/>Senior+}
+    E11-->Sr
+    E13-->Sr
+    Sr-->E12[Этап 12<br/>Платформа]
+    Sr-->E14[Этап 14<br/>Расширение стека]
+    Sr-->E16[Этап 16<br/>OSS и лидерство]
+    Sr-->E17[Этап 17<br/>Бизнес]
+    Sr-->E18[Этап 18<br/>DevSecOps]
+    E16-->Staff([Staff / Principal])
+    E17-->Staff
+    E18-->Staff
+```
+
+> Стрелки — рекомендованный порядок, а не жёсткая зависимость. Этапы 3, 7 и 19 идут в фоне постоянно.
+
+---
+
+## План на первые 90 дней (для тех, кто только начинает)
+
+Если roadmap кажется неподъёмным — начните с этого плана. Он закрывает Этапы 1 и 3 и подводит к Этапу 2.
+
+**Неделя 1–2.** Установка .NET SDK, Rider или VS Code + C# Dev Kit. Прохождение интерактивного тура C# на learn.microsoft.com. Первое консольное приложение «Hello, World» с аргументами командной строки. Регистрация на GitHub, первый коммит, базовые `git add`, `commit`, `push`.
+
+**Неделя 3–4.** Типы, переменные, управляющие конструкции, методы. Чтение и запись в консоль. Калькулятор в консоли с обработкой исключений. Освоить ветки git: `branch`, `checkout`, `merge`.
+
+**Неделя 5–6.** Классы, объекты, инкапсуляция. Наследование, интерфейсы, абстрактные классы. Pet-проект: текстовый менеджер задач (CLI), хранение в памяти, потом в JSON-файле через `System.Text.Json`.
+
+**Неделя 7–8.** Коллекции (List, Dictionary, HashSet). LINQ to Objects на уровне Where, Select, GroupBy, OrderBy. Расширить менеджер задач: фильтры по статусу, сортировки, экспорт в CSV.
+
+**Неделя 9–10.** Введение в async/await на уровне «вызвать HttpClient». Первое обращение к публичному REST API (например, GitHub API), парсинг JSON в объекты. Юнит-тесты на xUnit для бизнес-логики менеджера задач.
+
+**Неделя 11–12.** Базовый Docker: `Dockerfile`, `docker build`, `docker run`. Запаковать pet-проект в контейнер. GitHub Actions: настроить CI, который собирает проект и прогоняет тесты на каждый push.
+
+**Что должно быть на руках к концу 90 дней:**
+
+- Публичный GitHub-репозиторий с pet-проектом и историей коммитов.
+- README, в котором понятно, как запустить проект.
+- Зелёный CI-бейдж и хотя бы 20 пройденных тестов.
+- Решённые 30 задач на LeetCode/Codewars на C#.
+- Личный конспект пройденного в Obsidian, Notion или markdown-файлах в том же репо.
+
+---
+
+## Минимальная структура pet-проекта, которая открывает двери
+
+Рекрутёры и тимлиды смотрят не количество звёздочек, а инженерную аккуратность. Pet-проект, оформленный по этим правилам, ценится выше десятка туториал-клонов.
+
+```
+my-project/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # сборка, тесты, линт, security scan
+├── src/
+│   ├── MyApp.Api/              # точка входа
+│   ├── MyApp.Domain/           # доменные модели и логика
+│   ├── MyApp.Infrastructure/   # БД, внешние API, файловая система
+│   └── MyApp.Application/      # use cases, оркестрация
+├── tests/
+│   ├── MyApp.UnitTests/
+│   ├── MyApp.IntegrationTests/
+│   └── MyApp.ArchitectureTests/  # NetArchTest для проверки границ
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── DECISIONS/              # ADR в формате Nygard
+│   └── diagrams/               # C4-диаграммы в Mermaid/Structurizr
+├── .editorconfig               # единый стиль кода
+├── .gitignore
+├── .dockerignore
+├── Directory.Build.props       # общие свойства MSBuild
+├── Directory.Packages.props    # централизованные версии NuGet
+├── global.json                 # пиннинг версии SDK
+├── docker-compose.yml          # локальная инфра (Postgres, Redis)
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+└── SECURITY.md
+```
+
+Минимум обязательных файлов: README, LICENSE, .gitignore, .editorconfig, CI-пайплайн. Остальное добавляйте по мере роста проекта, но желательно с самого начала.
+
+---
+
+## Эталонные сниппеты: что отличает идиоматический C# от «кода на C# со стилем Java»
+
+**Async без подводных камней.**
+
+```csharp
+// Плохо: блокировка потока, риск дедлока
+public string GetUserName(int id) => _repository.GetAsync(id).Result.Name;
+
+// Плохо: async void — исключения теряются, не дождаться завершения
+public async void HandleUser(int id) { var u = await _repository.GetAsync(id); }
+
+// Хорошо: async всю цепочку, токен отмены пробрасываем
+public async Task<string> GetUserNameAsync(int id, CancellationToken ct)
+{
+    var user = await _repository.GetAsync(id, ct).ConfigureAwait(false);
+    return user.Name;
+}
+```
+
+**Pattern matching и switch expressions.**
+
+```csharp
+// Плохо: цепочка if/else, тяжело читать
+public decimal CalculateDiscount(Customer c)
+{
+    if (c.IsVip && c.OrdersCount > 10) return 0.20m;
+    if (c.IsVip) return 0.10m;
+    if (c.OrdersCount > 50) return 0.15m;
+    return 0m;
+}
+
+// Хорошо: декларативно, исчерпывающе
+public decimal CalculateDiscount(Customer c) => c switch
+{
+    { IsVip: true, OrdersCount: > 10 } => 0.20m,
+    { IsVip: true } => 0.10m,
+    { OrdersCount: > 50 } => 0.15m,
+    _ => 0m
+};
+```
+
+**Result vs Exception для ожидаемых ошибок.**
+
+```csharp
+// Спорно: исключения как поток управления
+public User GetUser(int id)
+{
+    var u = _db.Find(id);
+    if (u is null) throw new UserNotFoundException(id);
+    return u;
+}
+
+// Лучше: явный результат для ожидаемых сценариев
+public Result<User, UserError> GetUser(int id)
+{
+    var u = _db.Find(id);
+    return u is null
+        ? Result.Failure<User, UserError>(UserError.NotFound)
+        : Result.Success<User, UserError>(u);
+}
+```
+
+**Records для immutable-данных и DTO.**
+
+```csharp
+// Старый стиль: 30 строк boilerplate
+public class CreateOrderRequest { /* свойства, конструктор, Equals, GetHashCode */ }
+
+// Новый стиль: одна строка, всё сгенерировано
+public record CreateOrderRequest(Guid CustomerId, IReadOnlyList<OrderLine> Lines, DateTime PlacedAt);
+```
+
+**Span и низкоаллокационные парсеры.**
+
+```csharp
+// Плохо: аллокация строки на каждый Split
+public IEnumerable<int> ParseInts(string csv) => csv.Split(',').Select(int.Parse);
+
+// Хорошо: zero-allocation, читаем span'ами
+public static int SumCsv(ReadOnlySpan<char> csv)
+{
+    int sum = 0;
+    foreach (var range in csv.Split(','))
+        sum += int.Parse(csv[range]);
+    return sum;
+}
+```
+
+---
+
+## Этап 21. Наблюдаемость на уровне Senior+
+
+Логи, метрики и трейсы — три кита. Наблюдаемость — это не «много дашбордов», а способность ответить на вопрос «почему?» без редеплоя.
+
+- Структурированные логи через ILogger + Serilog или NLog. Никаких string-конкатенаций, только template-параметры: `_logger.LogInformation("Order {OrderId} created for {CustomerId}", id, customerId)`.
+- Уровни логирования по контракту: Trace для шумной отладки локально, Debug для разработки, Information для бизнес-событий, Warning для самовосстанавливающихся аномалий, Error для требующих внимания, Critical для падений системы.
+- Correlation ID и trace context через W3C `traceparent`, проброс между сервисами в HTTP-заголовках и в сообщениях очередей.
+- OpenTelemetry как стандарт де-факто: `Activity` API, `Meter` API, экспортеры в Jaeger, Tempo, Honeycomb, Datadog, Application Insights.
+- Метрики делим на три группы: RED (Rate, Errors, Duration) для сервисов, USE (Utilization, Saturation, Errors) для ресурсов, бизнес-метрики (заказы в минуту, GMV, конверсия).
+- SLI и SLO: что такое «работает» в цифрах. Error budgets и связь с релизной политикой.
+- Дашборды по принципу «один сервис — одна страница». Сверху бизнес-метрики, ниже RED, ещё ниже ресурсы и зависимости.
+- Алерты по симптомам, а не по причинам. Не «CPU > 80%», а «p95 latency > 500ms на /checkout».
+- Distributed profiling в проде: `dotnet-monitor`, continuous profiling через Pyroscope или Parca.
+- Стоимость наблюдаемости тоже метрика. High-cardinality лейблы и шумные логи разоряют бюджет быстрее, чем фичи.
+
+Практика: подключить OpenTelemetry к pet-проекту, отправить трейсы в локальный Jaeger через docker-compose, найти и устранить N+1 запрос по трейсу.
+
+## Этап 22. Контрактное тестирование и эволюция API
+
+Когда у вас больше одного сервиса, integration-тесты «всё-через-всё» становятся медленными и хрупкими. Контрактные тесты решают эту проблему.
+
+- Consumer-Driven Contracts: Pact .NET для HTTP и асинхронных контрактов. Consumer публикует ожидания, provider их проверяет на CI.
+- Schema registry для событий в Kafka: Confluent Schema Registry, Apicurio. Совместимость BACKWARD, FORWARD, FULL — учим, когда какая.
+- Avro, Protobuf, JSON Schema для описания сообщений. Понимать trade-offs: компактность vs читаемость vs скорость эволюции.
+- OpenAPI 3.x как контракт REST API. Генерация клиентов через NSwag или Kiota, серверов через Swashbuckle.
+- API versioning: URL path (`/v1/...`), header, media type. Sunset и Deprecation HTTP-заголовки.
+- Breaking changes по правилу «добавляй необязательное, удаляй через депрекацию». Минимум один релиз с дублирующимися полями.
+- API governance: линтеры (Spectral), стайлгайды (Zalando, Microsoft REST API Guidelines), code review схем как отдельный процесс.
+- GraphQL deprecation через `@deprecated` без удаления полей. Schema-first vs code-first подходы в HotChocolate.
+- gRPC contract evolution: правила добавления полей, reserved tags, нельзя менять wire-type существующего поля.
+
+## Этап 23. Feature flags и progressive delivery
+
+Релиз и деплой — разные действия. На зрелом уровне фичи доезжают до прода тёмными и включаются по решению продукта.
+
+- LaunchDarkly, Unleash, ConfigCat, Flagsmith, Azure App Configuration Feature Management.
+- Типы флагов: release, experiment, ops, permission. Срок жизни каждого типа — обязательное правило, иначе технический долг.
+- Trunk-based development и flags вместо длинных feature-веток. PR'ы по 200 строк, мерж каждый день.
+- Canary-релизы: 1% → 5% → 25% → 50% → 100% с автоматической остановкой по SLO-нарушениям.
+- Blue/green, shadow traffic, dark launches для критичных миграций.
+- A/B-эксперименты с правильной статистикой: power analysis, sample size, multiple testing correction, не подглядывать в результаты раньше срока.
+- Database migrations через expand-contract: добавляем колонку, двойная запись, бэкфилл, переключение чтения, удаление старого.
+- Kill switches для сторонних интеграций: один тумблер выключает зависший платёжный шлюз.
+
+## Этап 24. Работа с legacy и крупные миграции
+
+Senior-инженер чаще не строит на пустом месте, а лечит то, что построили до него. Это отдельный навык.
+
+- Strangler Fig pattern (Martin Fowler): постепенное замещение монолита новыми сервисами через прокси-слой.
+- Characterization tests на legacy: писать тесты на текущее поведение перед изменением, фиксировать инварианты.
+- Approval-тесты (ApprovalTests, Verify) для legacy без чётких контрактов.
+- Анализ зависимостей: NDepend, ndepend-style проверки в архитектурных тестах, графы зависимостей сборок.
+- Миграция между мажорными версиями .NET: .NET Framework → .NET 8/9 через try-convert, dotnet upgrade-assistant, ручной разбор API-несовместимостей.
+- Миграция с EF6 на EF Core, с Newtonsoft.Json на System.Text.Json, с AutoMapper на Mapster или ручной маппинг.
+- Анти-corruption layer между новой системой и legacy для изоляции грязных контрактов.
+- Документирование «как это устроено сейчас» перед изменениями. Sequence diagrams, текстовые runbooks, видеозапись прохода по коду.
+- Психология legacy: уважение к коду, написанному людьми с меньшим контекстом и временем. «Why was this done?» вместо «Who wrote this?».
+- Метрики прогресса миграции: процент трафика на новой системе, число вызовов старых API, число сервисов на новой платформе.
+
+## Этап 25. Управление техническим долгом как процесс
+
+Технический долг неизбежен. Senior+ инженер не борется с самим фактом его существования, а управляет им как ресурсом.
+
+- Классификация долга: prudent vs reckless, deliberate vs inadvertent (квадрант Martin Fowler).
+- Реестр долга как живой документ: что, где, сколько стоит исправить, сколько стоит не исправлять.
+- Boy Scout Rule: оставлять код чище, чем нашёл, но не превращать тикет в недельный рефакторинг.
+- Бюджет на устранение долга: 15–20% capacity команды на постоянной основе, а не «когда будет время».
+- Связь долга с бизнес-метриками: deployment frequency, lead time, change failure rate, mean time to recovery (DORA-метрики).
+- Большие переписывания почти всегда плохое решение. Эволюция через strangler — почти всегда хорошее.
+- Code archaeology: `git log -L`, `git blame -w -C -C -C` чтобы понять историю спорных решений.
+- Tech radar внутри команды: что мы принимаем, чего избегаем, что в эксперименте, что выводим из употребления.
+
+---
+
+## Идеи pet-проектов по уровню сложности
+
+Хороший pet-проект учит больше, чем книга. Плохой — крадёт время. Список ниже отсортирован по возрастанию сложности; берите тот, что на полступени выше текущего уровня.
+
+**Уровень Junior:**
+
+- CLI-менеджер задач с сохранением в JSON и фильтрами.
+- Парсер RSS-лент с уведомлениями в email.
+- Telegram-бот для напоминаний с хранением в SQLite.
+- URL shortener на ASP.NET Core Minimal API с in-memory хранилищем.
+- Конвертер валют, дергающий публичный API с кэшированием через IMemoryCache.
+
+**Уровень Junior+ / Middle:**
+
+- Marketplace-like API: пользователи, товары, заказы, JWT-аутентификация, EF Core + PostgreSQL.
+- Сервис коротких ссылок с метриками кликов и rate limiting.
+- Чат на SignalR с группами, файлами, push-уведомлениями.
+- Сервис расписания с фоновыми задачами на Hangfire или Quartz.NET.
+- CI/CD-pipeline для собственных проектов с автодеплоем в Azure/AWS Free Tier.
+
+**Уровень Middle:**
+
+- Event-sourced счёт пользователя с CQRS и проекциями в read-модель.
+- Платформа A/B-тестов с feature flags и SDK для клиентов.
+- Distributed crawler с очередями RabbitMQ или Kafka, дедупликацией и rate limiting на стороне consumer'а.
+- Сервис нотификаций с pluggable-каналами (email, SMS, push, webhook) и retry-политиками через Polly.
+- Аналог Redis на C# с RESP-протоколом и TTL-семантикой. Замерить производительность относительно настоящего Redis.
+
+**Уровень Middle+ / Senior:**
+
+- Минимальная реляционная БД с парсером SQL подмножества, b-tree индексом и WAL.
+- Brokerless message bus поверх UDP/multicast для локальной сети.
+- RAG-система по корпоративной документации: ingestion pipeline, vector DB, re-ranking, eval-harness.
+- Платёжный шлюз-симулятор с idempotency-ключами, outbox, sagas и хаос-инъекциями.
+- Собственный распределённый KV-store с Raft-консенсусом (упрощённый etcd).
+
+**Уровень Senior+ / Staff:**
+
+- Service mesh sidecar на C# с поддержкой mTLS, retry, circuit breaker, distributed tracing.
+- Колоночная БД с векторизацией SIMD и собственным storage engine.
+- Operator для Kubernetes на KubeOps, управляющий жизненным циклом БД или брокера.
+- Compiler от исходника на собственном DSL до IL или WASM через Roslyn.
+- Платформа в стиле internal developer platform: каталог сервисов, golden paths, scorecards.
+
+---
+
+## Глоссарий ключевых терминов
+
+Чтобы говорить с командой на одном языке. Не словарь, а ориентир: видишь термин впервые — гугли, разбирайся, не делай вид, что понял.
+
+- **AOT (Ahead-of-Time)** — компиляция в нативный код заранее, без JIT в рантайме.
+- **API Gateway** — точка входа для клиентов, скрывающая внутреннюю топологию сервисов.
+- **BFF (Backend for Frontend)** — отдельный бэкенд под конкретный фронтенд (web, mobile, partner).
+- **Bounded Context (DDD)** — граница, внутри которой термины имеют одинаковое значение.
+- **CAP-теорема** — в распределённой системе нельзя одновременно иметь Consistency, Availability и Partition tolerance.
+- **CDC (Change Data Capture)** — поток изменений из БД как источник событий.
+- **CQRS** — разделение модели чтения и модели записи.
+- **DI (Dependency Injection)** — внедрение зависимостей через конструктор/параметры вместо создания внутри.
+- **DDD (Domain-Driven Design)** — подход к проектированию через моделирование домена.
+- **DORA-метрики** — Deployment Frequency, Lead Time, MTTR, Change Failure Rate.
+- **Event Sourcing** — хранение состояния как последовательности событий.
+- **Idempotency** — повторное выполнение операции даёт тот же результат, что и однократное.
+- **JIT (Just-in-Time)** — компиляция IL в нативный код во время выполнения.
+- **LTS (Long-Term Support)** — версия с длительной поддержкой; для .NET это чётные мажорные версии.
+- **mTLS** — взаимная TLS-аутентификация клиента и сервера.
+- **N+1 problem** — один запрос за списком + N запросов за деталями каждого элемента.
+- **OLTP / OLAP** — транзакционная обработка / аналитическая обработка.
+- **Outbox pattern** — атомарная запись бизнес-данных и исходящего события в одну транзакцию.
+- **PII** — Personally Identifiable Information.
+- **RAG (Retrieval-Augmented Generation)** — генерация LLM-ответов с подмешиванием релевантных документов.
+- **Saga** — управление распределённой транзакцией через цепочку локальных транзакций с компенсациями.
+- **SBOM (Software Bill of Materials)** — список всех зависимостей и компонентов сборки.
+- **SLI / SLO / SLA** — индикатор / цель / контрактное обязательство уровня сервиса.
+- **Throttling / Rate limiting** — ограничение частоты запросов.
+- **WAL (Write-Ahead Log)** — журнал изменений, пишется до применения к данным.
+
+---
+
+## Расширенные ресурсы по этапам
+
+Подборка проверенных каналов и блогов, дополняющая ссылки внутри этапов.
+
+**YouTube-каналы:**
+
+- Nick Chapsas — короткие практические разборы, обзоры релизов .NET.
+- Tim Corey — для начинающих и среднего уровня, фокус на чистом коде.
+- Raw Coding — глубокие разборы внутренностей ASP.NET Core.
+- CodeOpinion (Derek Comartin) — архитектура, DDD, distributed systems.
+- IAmTimCorey, Milan Jovanović, Patrick God — middle-level контент.
+- ByteByteGo, Hussein Nasser, ArjanCodes — системный дизайн (не C#-специфично, но универсально полезно).
+
+**Блоги (RU и EN):**
+
+- devblogs.microsoft.com/dotnet — официальный.
+- andrewlock.net — глубокие разборы ASP.NET Core.
+- enterprisecraftsmanship.com — Vladimir Khorikov, тестирование и архитектура.
+- stevejgordon.co.uk — производительность и внутренности ASP.NET Core.
+- michaelscodingspot.com — диагностика, профилирование, дампы.
+- code-maze.com — широкий спектр практических статей.
+- habr.com/ru/hubs/net — русскоязычные статьи и переводы.
+
+**Telegram-каналы и чаты:**
+
+- @dotnetru, @csharp_ru, @dotnetchat — крупнейшие русскоязычные сообщества.
+- @dotnet_easy для начинающих, @dotnetdoer для middle+.
+
+**Подкасты:**
+
+- .NET Rocks!, The Modern .NET Show, Coding Blocks (EN).
+- DotNet & More, RadioDotNet, SDCast (RU).
+
+**Newsletter-рассылки:**
+
+- The .NET News Daily by Petri Kainulainen.
+- Awesome .NET Weekly.
+- ByteByteGo Newsletter для системного дизайна.
+
+---
+
+## Шаблон еженедельной ретроспективы обучения
+
+Полезно вести в том же репозитории в папке `learning-log/`. Через год это становится мощным портфолио и резюме.
+
+```markdown
+# Week N: YYYY-MM-DD — YYYY-MM-DD
+
+## Что изучил
+- Тема 1: краткое описание + ссылки на изученные материалы
+- Тема 2: ...
+
+## Что написал/построил
+- PR #..., feature/...: что сделал, какие выводы
+- Pet-проект: какой инкремент, какие проблемы решил
+
+## Что не получилось и почему
+- Проблема: почему застрял, как разобрался (или нет)
+
+## Что хочу изучить на следующей неделе
+- Конкретные темы и материалы, не "посмотрю что-нибудь по async"
+
+## Эврики недели
+- Инсайты и неочевидные связи между темами
+```
+
+Такой лог решает три задачи: фиксирует прогресс, выявляет дыры в понимании, готовит материал для технических собеседований («расскажите о сложной задаче, которую вы решали»).
+
+---
 
 ## Contributing
 
