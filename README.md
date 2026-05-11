@@ -2,6 +2,8 @@
 
 ![Stars](https://img.shields.io/github/stars/Develp10/Csharp_Roadmap?style=social) ![Forks](https://img.shields.io/github/forks/Develp10/Csharp_Roadmap?style=social) ![License](https://img.shields.io/badge/license-MIT-green) ![.NET](https://img.shields.io/badge/.NET-8%20LTS%20%7C%209-512BD4?logo=dotnet) ![Language](https://img.shields.io/badge/lang-RU-blue)
 
+> 📢 **Telegram-канал автора:** [t.me/csharp_ci](https://t.me/csharp_ci) — обновления roadmap, материалы по C# и .NET, разбор практик и полезные ссылки.
+
 Практическое руководство по росту в C#-разработке. Материал собран для тех, кто хочет получить инженерную глубину, а не просто накликать CRUD по туториалам. Здесь последовательность изучения, лучшие практики, ресурсы и трезвый разбор того, как работать с ИИ-инструментами и оставаться востребованным.
 
 > Roadmap живой. PR с уточнениями, ссылками и опытом приветствуются. См. раздел [Contributing](#contributing).
@@ -342,23 +344,92 @@
 
 ---
 
-## Минимальная книжная полка
+## Полезная литература
 
-* Jon Skeet, «C# in Depth»
-* Stephen Cleary, «Concurrency in C# Cookbook»
-* Andrew Lock, «ASP.NET Core in Action»
-* Konrad Kokosa, «Pro .NET Memory Management»
-* Martin Kleppmann, «Designing Data-Intensive Applications»
-* Vladimir Khorikov, «Unit Testing: Principles, Practices, and Patterns»
-* Eric Evans, «Domain-Driven Design»
-* Robert Martin, «Clean Code» и «Clean Architecture» (с критическим взглядом)
-* Sam Newman, «Building Microservices»
+Расширенная подборка книг по этапам roadmap. Звёздочкой (★) отмечен «минимальный must-read».
 
----
+### Язык C# и платформа .NET
+* ★ Jon Skeet, «C# in Depth» — глубокое понимание языка.
+* ★ Konrad Kokosa, «Pro .NET Memory Management» — GC, аллокации, диагностика.
+* Stephen Cleary, «Concurrency in C# Cookbook» — async/await, параллелизм, синхронизация.
+* Andrew Troelsen, Philip Japikse, «Pro C# 10 with .NET 6/8» — справочник по платформе.
+* Mark J. Price, «C# 12 and .NET 8 — Modern Cross-Platform Development».
+* Sasha Goldshtein, «Pro .NET Performance» — производительность на уровне CLR.
+* Ben Watson, «Writing High-Performance .NET Code» — практические оптимизации.
+* Andrey Akinshin, «Pro .NET Benchmarking» — корректные измерения через BenchmarkDotNet.
 
-Этот roadmap не догма. Подстраивайте под свои задачи и интересы, но не пропускайте фундамент ради модного фреймворка. 
+### ASP.NET Core и веб-разработка
+* ★ Andrew Lock, «ASP.NET Core in Action» — фундамент фреймворка.
+* Dino Esposito, «Programming ASP.NET Core» — практика и шаблоны.
+* Christian Nagel, «Professional C# and .NET» — широкий обзор экосистемы.
 
----
+### Базы данных и доступ к данным
+* ★ Bill Karwin, «SQL Antipatterns» — типичные ошибки и их лечение.
+* Markus Winand, «SQL Performance Explained» / онлайн-версия «Use the Index, Luke» — индексы и планы.
+* Jon P. Smith, «Entity Framework Core in Action» — практика EF Core.
+* Alex Petrov, «Database Internals» — устройство современных БД.
+
+### Архитектура и проектирование
+* ★ Martin Kleppmann, «Designing Data-Intensive Applications» — главная книга десятилетия для бэкенда.
+* ★ Eric Evans, «Domain-Driven Design» — оригинальная книга по DDD.
+* Vaughn Vernon, «Implementing Domain-Driven Design» — DDD на практике.
+* Vlad Khononov, «Learning Domain-Driven Design» — современный взгляд на DDD.
+* Scott Wlaschin, «Domain Modeling Made Functional» — моделирование через типы.
+* Robert C. Martin, «Clean Architecture» и «Clean Code» — с критическим взглядом.
+* Sam Newman, «Building Microservices» и «Monolith to Microservices».
+* Gregor Hohpe, «Enterprise Integration Patterns» — паттерны интеграции.
+* Mark Richards, Neal Ford, «Fundamentals of Software Architecture».
+* Vladik Khononov, «Balancing Coupling in Software Design».
+
+### Качество кода и тестирование
+* ★ Vladimir Khorikov, «Unit Testing: Principles, Practices, and Patterns».
+* Roy Osherove, «The Art of Unit Testing».
+* Michael Feathers, «Working Effectively with Legacy Code» — работа с legacy.
+* Steve Freeman, Nat Pryce, «Growing Object-Oriented Software, Guided by Tests».
+
+### Распределённые системы и производительность
+* Martin Kleppmann, «Designing Data-Intensive Applications» (перечитать на senior+).
+* Brendan Burns, «Designing Distributed Systems».
+* Alex Xu, «System Design Interview» Vol. 1 и Vol. 2.
+* Martin Thompson и материалы Mechanical Sympathy.
+
+### DevOps, облака и эксплуатация
+* Nigel Poulton, «Docker Deep Dive» и «The Kubernetes Book».
+* Marko Lukša, «Kubernetes in Action».
+* Google SRE Team, «Site Reliability Engineering» и «The Site Reliability Workbook» (бесплатно онлайн).
+* Jez Humble, David Farley, «Continuous Delivery».
+* Nicole Forsgren, Jez Humble, Gene Kim, «Accelerate» — DORA-метрики.
+* Mauricio Salatino, «Platform Engineering on Kubernetes».
+
+### Безопасность
+* Andrew Hoffman, «Web Application Security».
+* Julien Vehent, «Securing DevOps».
+* OWASP ASVS и OWASP Top 10 — обязательные онлайн-документы.
+* Dafydd Stuttard, «The Web Application Hacker's Handbook».
+
+### Soft skills, карьера и инженерная культура
+* ★ Andrew Hunt, David Thomas, «The Pragmatic Programmer».
+* John Ousterhout, «A Philosophy of Software Design».
+* Will Larson, «Staff Engineer» и «An Elegant Puzzle».
+* Tanya Reilly, «The Staff Engineer's Path».
+* Camille Fournier, «The Manager's Path».
+* Cal Newport, «Deep Work» и «So Good They Can't Ignore You».
+* James Clear, «Atomic Habits».
+* Chris Voss, «Never Split the Difference» — переговоры.
+* Marty Cagan, «Inspired» — продуктовое мышление.
+* Eric Ries, «The Lean Startup».
+
+### ML / AI-инженерия
+* Chip Huyen, «Designing Machine Learning Systems».
+* Andriy Burkov, «Machine Learning Engineering».
+* Документация ML.NET и Semantic Kernel как обязательное дополнение.
+
+### Бесплатно онлайн и must-read статьи
+* «The Twelve-Factor App» — twelve-factor.net.
+* «Pro Git» — git-scm.com/book.
+* «Use the Index, Luke» — use-the-index-luke.com.
+* Microsoft Learn — learn.microsoft.com/dotnet.
+* Блоги: Andrew Lock (andrewlock.net), Vladimir Khorikov (enterprisecraftsmanship.com), Stephen Toub (devblogs.microsoft.com), Steve Gordon (stevejgordon.co.uk).
 
 ## Soft skills и инженерная коммуникация
 
