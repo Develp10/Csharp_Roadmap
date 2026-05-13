@@ -12,8 +12,8 @@
 | 4 | Базы данных и доступ к данным | 1–2 месяца | [04-databases.md](04-databases.md) |
 | 5 | ASP.NET Core и веб-разработка | 2–3 месяца | [05-aspnetcore.md](05-aspnetcore.md) |
 | 6 | Архитектура и проектирование | постоянно | [06-architecture.md](06-architecture.md) |
-| 7 | Качество кода и тестирование | постоянно | в основном README |
-| 8 | Облака и эксплуатация | 1–2 месяца | в основном README |
+| 7 | Качество кода и тестирование | постоянно | [07-quality-testing.md](07-quality-testing.md) |
+| 8 | Облака и эксплуатация | 1–2 месяца | [08-cloud-operations.md](08-cloud-operations.md) |
 
 ## Специализация и Senior+
 
