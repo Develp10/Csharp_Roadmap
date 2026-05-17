@@ -961,22 +961,30 @@ public async Task<string> GetUserNameAsync(int id, CancellationToken ct)
 **Pattern matching и switch expressions.**
 
 ```csharp
-// Плохо: цепочка if/else, тяжело читать
-public decimal CalculateDiscount(Customer c)
+// Плохо: ветвление по типу через is + лесенка if/return
+public decimal CalculateFee(Payment p)
 {
-    if (c.IsVip && c.OrdersCount > 10) return 0.20m;
-    if (c.IsVip) return 0.10m;
-    if (c.OrdersCount > 50) return 0.15m;
-    return 0m;
+    if (p is CardPayment card)
+    {
+        if (card.IsForeign) return card.Amount * 0.03m;
+        return card.Amount * 0.015m;
+    }
+    if (p is BankTransfer bt)
+    {
+        return bt.Amount > 100_000m ? 50m : 10m;
+    }
+    if (p is Cash) return 0m;
+    throw new InvalidOperationException("Unknown payment");
 }
 
-// Хорошо: декларативно, исчерпывающе
-public decimal CalculateDiscount(Customer c) => c switch
+// Хорошо: switch expression + property patterns по sealed-иерархии
+public decimal CalculateFee(Payment p) => p switch
 {
-    { IsVip: true, OrdersCount: > 10 } => 0.20m,
-    { IsVip: true } => 0.10m,
-    { OrdersCount: > 50 } => 0.15m,
-    _ => 0m
+    CardPayment  { IsForeign: true } c       => c.Amount * 0.03m,
+    CardPayment                      c       => c.Amount * 0.015m,
+    BankTransfer { Amount: > 100_000m }       => 50m,
+    BankTransfer                              => 10m,
+    Cash                                      => 0m,
 };
 ```
 
