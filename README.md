@@ -1,6 +1,8 @@
 # C# Roadmap: с нуля до профи
 
 ![Stars](https://img.shields.io/github/stars/Develp10/Csharp_Roadmap?style=social) ![Forks](https://img.shields.io/github/forks/Develp10/Csharp_Roadmap?style=social) ![License](https://img.shields.io/badge/license-MIT-green) ![.NET](https://img.shields.io/badge/.NET-8%20LTS%20%7C%209-512BD4?logo=dotnet) ![Language](https://img.shields.io/badge/lang-RU-blue)
+> 🇬🇧 **English version**: [csharfullroadmap](https://github.com/Develp10/csharfullroadmap)
+
 
 > 📢 **Telegram-канал автора:** [t.me/csharp_ci](https://t.me/csharp_ci) — обновления roadmap, материалы по C# и .NET, разбор практик и полезные ссылки.
 
